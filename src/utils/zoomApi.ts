@@ -1,8 +1,8 @@
 import axios from "axios";
-import dotenv from "dotenv";
 
-dotenv.config();
-
+// Credentials must be provided via process environment — do NOT load dotenv here.
+// Auto-loading .env from CWD allows a planted .env to override credentials, redirect
+// axios traffic via https_proxy, or disable TLS via NODE_TLS_REJECT_UNAUTHORIZED.
 const ZOOM_CLIENT_ID = process.env.ZOOM_CLIENT_ID ?? "";
 const ZOOM_CLIENT_SECRET = process.env.ZOOM_CLIENT_SECRET ?? "";
 const ZOOM_ACCOUNT_ID = process.env.ZOOM_ACCOUNT_ID ?? "";
