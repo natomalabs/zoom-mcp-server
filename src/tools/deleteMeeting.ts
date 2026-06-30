@@ -1,8 +1,11 @@
 import axios from "axios";
 import { accessToken } from "../utils/zoomApi.js";
 import { updateAccessToken } from "../utils/helper.js";
+import { validateMeetingId } from "../utils/validate.js";
 
 export async function deleteZoomMeeting({ id }: { id: string }) {
+  validateMeetingId(id);
+
   const endpoint = `https://api.zoom.us/v2/meetings/${id}`;
 
   try {

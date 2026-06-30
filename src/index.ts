@@ -47,11 +47,11 @@ server.tool(
   "create_meeting",
   "Create a new Zoom meeting",
   {
-    topic: z.string().describe("Meeting topic"),
+    topic: z.string().max(200).describe("Meeting topic"),
     start_time: z.string().describe("Start time"),
     timezone: z.string().describe("Timezone"),
-    duration: z.number().min(0).describe("Duration in minutes"),
-    agenda: z.string().describe("Meeting agenda"),
+    duration: z.number().min(1).max(1440).describe("Duration in minutes"),
+    agenda: z.string().max(2000).describe("Meeting agenda"),
   },
   async (params) => {
     const data = await createZoomMeeting(params);
@@ -83,12 +83,12 @@ server.tool(
   "update_meeting",
   "Update an existing Zoom meeting",
   {
-    id: z.string().describe("Meeting ID"),
-    topic: z.string().describe("Updated topic"),
+    id: z.string().regex(/^\d+$/, "Meeting ID must be numeric").describe("Meeting ID"),
+    topic: z.string().max(200).describe("Updated topic"),
     start_time: z.string().describe("Updated start time"),
-    duration: z.number().describe("Updated duration"),
+    duration: z.number().min(1).max(1440).describe("Updated duration"),
     timezone: z.string().describe("Updated timezone"),
-    agenda: z.string().describe("Updated agenda"),
+    agenda: z.string().max(2000).describe("Updated agenda"),
   },
   async (params) => {
     const data = await updateZoomMeeting(params);
@@ -109,7 +109,7 @@ server.tool(
   "delete_meeting",
   "Delete an existing Zoom meeting",
   {
-    id: z.string().describe("Meeting ID"),
+    id: z.string().regex(/^\d+$/, "Meeting ID must be numeric").describe("Meeting ID"),
   },
   async (params) => {
     const data = await deleteZoomMeeting(params);
