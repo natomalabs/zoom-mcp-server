@@ -2,11 +2,14 @@ import axios from 'axios';
 import { accessToken } from '../utils/zoomApi.js';
 import { UpdateMeetingParams } from '../utils/types.js';
 import { updateAccessToken } from '../utils/helper.js';
+import { validateMeetingId } from '../utils/validate.js';
 
 export async function updateZoomMeeting(params: UpdateMeetingParams) {
   if (!params.id) {
     throw new Error('Meeting ID is required to update the meeting.');
   }
+
+  validateMeetingId(params.id);
 
   const { id, topic, start_time, duration, timezone, agenda } = params;
   const url = `https://api.zoom.us/v2/meetings/${id}`;
